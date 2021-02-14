@@ -1,0 +1,37 @@
+@hostname = http://localhost
+@port = 5000
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+@createdAt = {{$datetime iso8601}}
+
+
+
+### Register a new user
+POST {{host}}/users/register 
+Content-Type: {{contentType}}
+
+{
+    "username": "admin",
+    "password": "demo1"
+}
+
+
+### Login user
+# @name login
+POST {{host}}/users/login 
+Content-Type: {{contentType}}
+
+{
+    "username": "admin",
+    "password": "demo1"
+}
+
+
+### save the token as globale variable
+@accessToken = {{login.response.body.token}}
+
+
+### Get all user
+GET {{host}}/users/all
+Authorization: Bearer {{accessToken}}
+
